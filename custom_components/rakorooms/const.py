@@ -1,2 +1,2 @@
 """Constants for the Rako integration."""
-DOMAIN = "rako"
+DOMAIN = "rakorooms"
