@@ -13,7 +13,7 @@ from python_rako.model import ChannelStatusMessage, SceneStatusMessage, StatusMe
 
 from homeassistant.core import HomeAssistant
 
-from custom_components.rako.fan import RakoFan
+from custom_components.rakorooms.fan import RakoFan
 
 from .const import DOMAIN
 from .light import RakoLight
