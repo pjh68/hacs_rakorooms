@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 
-from homeassistant.components.select import DOMAIN as SELECT_DOMAIN
+from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.fan import DOMAIN as FAN_DOMAIN
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_MAC, CONF_NAME, CONF_PORT
@@ -40,20 +40,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
     rako_domain_entry_data: RakoDomainEntryData = {
         "rako_bridge_client": rako_bridge,
-        "rako_scene_map": {},
+        "rako_light_map": {},
         "rako_fan_map": {},
         "rako_listener_task": None,
     }
     hass.data[DOMAIN][rako_bridge.mac] = rako_domain_entry_data
 
-    await hass.config_entries.async_forward_entry_setups(entry, [SELECT_DOMAIN, FAN_DOMAIN])
+    await hass.config_entries.async_forward_entry_setups(entry, [LIGHT_DOMAIN, FAN_DOMAIN])
 
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    await hass.config_entries.async_forward_entry_unload(entry, SELECT_DOMAIN)
+    await hass.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
     await hass.config_entries.async_forward_entry_unload(entry, FAN_DOMAIN)
 
     del hass.data[DOMAIN][entry.unique_id]

@@ -16,7 +16,7 @@ from homeassistant.core import HomeAssistant
 from custom_components.rakorooms.fan import RakoFan
 
 from .const import DOMAIN
-from .select import RakoRoomScene
+from .light import RakoRoomLight
 from .model import RakoDomainEntryData
 from .util import create_unique_id
 
@@ -41,9 +41,9 @@ class RakoBridge(Bridge):
         self.hass = hass
 
     @property
-    def _scene_map(self) -> dict[str, RakoRoomScene]:
+    def _light_map(self) -> dict[str, RakoRoomLight]:
         rako_domain_entry_data: RakoDomainEntryData = self.hass.data[DOMAIN][self.mac]
-        return rako_domain_entry_data["rako_scene_map"]
+        return rako_domain_entry_data["rako_light_map"]
 
     @property
     def _fan_map(self) -> dict[str, RakoFan]:
@@ -54,7 +54,7 @@ class RakoBridge(Bridge):
     def _entity_map(self) -> dict[str, any]:
         """Return combined map of all listening entities."""
         entity_map = {}
-        entity_map.update(self._scene_map)
+        entity_map.update(self._light_map)
         entity_map.update(self._fan_map)
         return entity_map
 
@@ -73,14 +73,14 @@ class RakoBridge(Bridge):
         entity_map = self._entity_map
         return entity_map.get(entity_unique_id)
 
-    def _add_listening_scene(self, scene: RakoRoomScene) -> None:
-        scene_map = self._scene_map
-        scene_map[scene.unique_id] = scene
+    def _add_listening_light(self, light: RakoRoomLight) -> None:
+        light_map = self._light_map
+        light_map[light.unique_id] = light
 
-    def _remove_listening_scene(self, scene: RakoRoomScene) -> None:
-        scene_map = self._scene_map
-        if scene.unique_id in scene_map:
-            del scene_map[scene.unique_id]
+    def _remove_listening_light(self, light: RakoRoomLight) -> None:
+        light_map = self._light_map
+        if light.unique_id in light_map:
+            del light_map[light.unique_id]
 
     def _add_listening_fan(self, fan) -> None:
         fan_map = self._fan_map
@@ -106,8 +106,8 @@ class RakoBridge(Bridge):
 
     async def register_for_state_updates(self, entity) -> None:
         """Register an entity to listen for state updates."""
-        if hasattr(entity, "select_option"):  # Scene select entity
-            self._add_listening_scene(entity)
+        if hasattr(entity, "effect_list"):  # Light entity
+            self._add_listening_light(entity)
         elif hasattr(entity, "percentage"):  # Fan entity
             self._add_listening_fan(entity)
         else:
@@ -119,8 +119,8 @@ class RakoBridge(Bridge):
 
     async def deregister_for_state_updates(self, entity) -> None:
         """Deregister an entity to listen for state updates."""
-        if hasattr(entity, "select_option"):  # Scene select entity
-            self._remove_listening_scene(entity)
+        if hasattr(entity, "effect_list"):  # Light entity
+            self._remove_listening_light(entity)
         elif hasattr(entity, "percentage"):  # Fan entity
             self._remove_listening_fan(entity)
 

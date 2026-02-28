@@ -8,13 +8,13 @@ from typing import TYPE_CHECKING, TypedDict
 if TYPE_CHECKING:
     from .bridge import RakoBridge
     from .fan import RakoFan
-    from .select import RakoRoomScene
+    from .light import RakoRoomLight
 
 
 class RakoDomainEntryData(TypedDict):
     """A single Rako config entry's data."""
 
     rako_bridge_client: RakoBridge
-    rako_scene_map: dict[str, RakoRoomScene]
+    rako_light_map: dict[str, RakoRoomLight]
     rako_fan_map: dict[str, RakoFan]
     rako_listener_task: Task | None
