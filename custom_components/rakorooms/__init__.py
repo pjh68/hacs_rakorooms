@@ -1,4 +1,4 @@
-"""The Rako integration."""
+"""The RakoRooms integration."""
 from __future__ import annotations
 
 import logging

@@ -1,17 +1,13 @@
 {
-  "domain": "rako",
-  "name": "Rako",
-  "codeowners": [
-    "@marengaz",
-    "@SimonLeigh"
-  ],
+  "domain": "rakorooms",
+  "name": "RakoRooms",
+  "codeowners": ["@pjh68"],
   "config_flow": true,
-  "documentation": "https://github.com/SimonLeigh/hacs_rako",
+  "documentation": "https://github.com/pjh68/hacs_rakorooms",
   "integration_type": "hub",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/SimonLeigh/hacs_rako/issues",
   "requirements": [
     "python-rako-2025==0.4.1"
   ],
-  "version": "0.6.0"
+  "version": "0.1.0"
 }
