@@ -138,9 +138,16 @@ class RakoRoomScene(SelectEntity):
             self._available = True
             self.async_write_ha_state()
 
-        except (RakoBridgeError, asyncio.TimeoutError):
+        except Exception as e:
             if self._available:
-                _LOGGER.error("An error occurred while updating the Rako Scene")
+                _LOGGER.error(
+                    "An error occurred while updating the Rako Scene (room_id=%s, scene=%s): %s (%s)",
+                    self._light.room_id,
+                    scene_number,
+                    type(e).__name__,
+                    e,
+                    exc_info=True
+                )
             self._available = False
             self.async_write_ha_state()
             return
