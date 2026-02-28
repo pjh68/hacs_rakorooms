@@ -11,9 +11,4 @@ The fundamental design of Rako lighting systems and Home Assistant's view of lig
 
 Rather than model Rako lights, this integration instead focusses on the scene setting of each room. Essentially, we model what is happening on the Rako light switches, not the light channels.
 
-
-Alternative approach: We may consider modelling rooms as lights, where scene is an EFFECT
- Scene 1 = ON, No effort
- Scene 2 = ON, effect=2
- etc
- 
+Details of the changes are in [this PRD](PRD-Scene-Based-Integration.md)
