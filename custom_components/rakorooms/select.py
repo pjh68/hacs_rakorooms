@@ -138,15 +138,28 @@ class RakoRoomScene(SelectEntity):
             self._available = True
             self.async_write_ha_state()
 
-        except Exception as e:
+        except TimeoutError:
+            # Command was sent but response timed out - this is OK because the
+            # state update will come via the listener task. Don't mark unavailable.
+            _LOGGER.debug(
+                "Scene command timed out waiting for response (room_id=%s, scene=%s), "
+                "but state will be updated by listener",
+                self._light.room_id,
+                scene_number,
+            )
+            # Optimistically update state - listener will correct if needed
+            self._current_scene = scene_number
+            self._available = True
+            self.async_write_ha_state()
+
+        except RakoBridgeError as e:
+            # Actual bridge error - mark unavailable
             if self._available:
                 _LOGGER.error(
-                    "An error occurred while updating the Rako Scene (room_id=%s, scene=%s): %s (%s)",
+                    "Bridge error while updating Rako Scene (room_id=%s, scene=%s): %s",
                     self._light.room_id,
                     scene_number,
-                    type(e).__name__,
                     e,
-                    exc_info=True
                 )
             self._available = False
             self.async_write_ha_state()
