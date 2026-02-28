@@ -17,3 +17,4 @@ config/*
 !config/configuration.yaml
 broken.xml
 rako.xml
+custom_components/rakorooms/.DS_Store
