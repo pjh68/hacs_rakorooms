@@ -18,3 +18,4 @@ config/*
 broken.xml
 rako.xml
 custom_components/rakorooms/.DS_Store
+custom_components/.DS_Store

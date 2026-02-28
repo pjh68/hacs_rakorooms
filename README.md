@@ -6,8 +6,7 @@ This work build on that of:
 @SimonLeigh, who resurrected and updated the core library and built a HACS package for custom instal of this integration 
 https://github.com/SimonLeigh/hacs_rako
 
-
-# Why another fork? And why Rako Rooms?
+# Why another fork? And why Rako Rooms?
 The fundamental design of Rako lighting systems and Home Assistant's view of lights doesn't quite align, particularly if you primarily want to retain control of your light configuration within Rako.
 
 Rather than model Rako lights, this integration instead focusses on the scene setting of each room. Essentially, we model what is happening on the Rako light switches, not the light channels.
